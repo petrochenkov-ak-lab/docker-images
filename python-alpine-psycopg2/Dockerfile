@@ -1,8 +1,8 @@
 FROM python:3.14.3-alpine3.23
 
-COPY ./docker/images/python/logging.conf /etc/logging.conf
-COPY ./docker/images/python/pip.conf /etc/pip.conf
-COPY ./docker/images/python/uv.toml /etc/uv.toml
+COPY ./python-alpine-psycopg2/logging.conf /etc/logging.conf
+COPY ./python-alpine-psycopg2/pip.conf /etc/pip.conf
+COPY ./python-alpine-psycopg2/uv.toml /etc/uv.toml
 
 ENV PIP_NO_CACHE_DIR=1
 ENV PIP_ROOT_USER_ACTION=ignore

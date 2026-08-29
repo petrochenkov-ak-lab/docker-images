@@ -28,15 +28,16 @@ RUN useradd -m runner \
 USER runner
 WORKDIR /home/runner
 
-# 7. Download, extract, and clean up the official GitHub Actions runner binary
-RUN mkdir actions-runner && cd actions-runner \
-    && curl -o actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz -L https://github.com{RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
-    && tar xzf ./actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz \
-    && rm actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz
+# https://github.com/organizations/petrochenkov-ak-lab/settings/actions/runners/new?arch=x64&os=linux
+RUN mkdir actions-runner
+RUN cd actions-runner && curl -o actions-runner-linux-x64-2.336.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.336.0/actions-runner-linux-x64-2.336.0.tar.gz
+RUN cd actions-runner && echo "04cf0be1aff4c3ec3554466c39124ca250e3effd8873bb7e8d68535aa9505d5d  actions-runner-linux-x64-2.336.0.tar.gz" | sha256sum -c
+RUN cd actions-runner && tar xzf ./actions-runner-linux-x64-2.336.0.tar.gz
+
 
 # 8. Copy and set permissions for the initialization script (entrypoint.sh)
 USER root
-COPY entrypoint.sh /home/runner/actions-runner/entrypoint.sh
+COPY ./github-runner/entrypoint.sh /home/runner/actions-runner/entrypoint.sh
 RUN chmod +x /home/runner/actions-runner/entrypoint.sh \
     && chown -R runner:runner /home/runner/actions-runner
 
