@@ -1,39 +1,35 @@
-# 1. Base image: stable LTS version of Ubuntu
-FROM ubuntu:24.04
+# 1. Используем ультра-легкий, но стабильный Debian Slim
+FROM debian:bookworm-slim
 
-# 2. Pin the runner version. GitHub automatically blocks outdated versions.
+# 2. Версия раннера
 ARG RUNNER_VERSION="2.336.0"
 
-# 3. Disable interactive prompts during package installation
+# 3. Отключаем интерактивные диалоги
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 4. Install essential dependencies required by the GitHub Actions agent
-RUN apt-get update && apt-get install -y \
+# 4. Установка ТОЛЬКО необходимых зависимостей в один слой
+# Использование --no-install-recommends экономит сотни мегабайт
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     sudo \
     git \
     jq \
     ca-certificates \
-    build-essential \
-    libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 5. Security: Create a non-root user (the GitHub agent refuses to run under root)
-# Add the user to sudoers so your workflows can run 'sudo apt install' if needed
+# 5. Создание безопасного пользователя
 RUN useradd -m runner \
     && usermod -aG sudo runner \
     && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# 6. Switch to the newly created user and its home directory
 USER runner
-WORKDIR /home/runner
+WORKDIR /home/runner/actions-runner
 
 # https://github.com/organizations/petrochenkov-ak-lab/settings/actions/runners/new?arch=x64&os=linux
-RUN mkdir actions-runner
-RUN cd actions-runner && curl -o actions-runner-linux-x64-2.336.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.336.0/actions-runner-linux-x64-2.336.0.tar.gz
-RUN cd actions-runner && echo "04cf0be1aff4c3ec3554466c39124ca250e3effd8873bb7e8d68535aa9505d5d  actions-runner-linux-x64-2.336.0.tar.gz" | sha256sum -c
-RUN cd actions-runner && tar xzf ./actions-runner-linux-x64-2.336.0.tar.gz
-
+RUN curl -f -o actions-runner-linux-x64-2.336.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.336.0/actions-runner-linux-x64-2.336.0.tar.gz \
+    && echo "04cf0be1aff4c3ec3554466c39124ca250e3effd8873bb7e8d68535aa9505d5d  actions-runner-linux-x64-2.336.0.tar.gz" | sha256sum -c \
+    && tar xzf ./actions-runner-linux-x64-2.336.0.tar.gz \
+    && rm ./actions-runner-linux-x64-2.336.0.tar.gz
 
 # 8. Copy and set permissions for the initialization script (entrypoint.sh)
 USER root

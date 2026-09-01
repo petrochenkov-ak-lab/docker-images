@@ -1,0 +1,40 @@
+name: Deploy Postgres
+
+on:
+  push:
+    branches: [ main ]
+    # Воркфлоу сработает, только если изменились файлы в этих путях
+    paths:
+      - 'postgres/**'
+      - '.github/workflows/deploy-postgres.yaml'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          # Контекстом делаем саму папку postgres, чтобы пути внутри Dockerfile (COPY) считались от неё
+          context: ./postgres
+          file: ./postgres/Dockerfile
+          push: true
+          # Твой короткий красивый тег на уровне аккаунта
+          tags: ghcr.io/${{ github.repository_owner }}/postgres:18
+          # Включаем кэш, чтобы повторные сборки занимали пару секунд
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

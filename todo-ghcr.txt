@@ -1,0 +1,74 @@
+name: Build and Push Private Docker Image
+
+on:
+  push:
+    branches: [ "main" ] # Сборка запускается при пуше в ветку main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Даем раннеру права на запись пакетов в GHCR
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Авторизуемся в GHCR под встроенным токеном
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Собираем Docker-образ и пушим его в ваш приватный GHCR
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # Название образа будет в формате: ghcr.io/имя_аккаунта/имя_репозитория:latest
+          tags: ghcr.io/${{ github.repository }}:latest
+---
+echo "ВАШ_СКОПИРОВАННЫЙ_ТОКЕН" | docker login ghcr.io -u ВАШ_ЛОГИН_НА_GITHUB --password-stdin
+
+---
+name: Build and Push Private Docker Image
+
+on:
+  push:
+    branches: [ "main" ] # Сборка запускается при пуше в ветку main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # Даем раннеру права на запись пакетов в GHCR
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. Авторизуемся в GHCR под встроенным токеном
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 2. Собираем Docker-образ и пушим его в ваш приватный GHCR
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          # Название образа будет в формате: ghcr.io/имя_аккаунта/имя_репозитория:latest
+          tags: ghcr.io/${{ github.repository }}:latest
+---
+1) .github/workflows/deploy.yaml ты всегда такой naming предлагаешь.и это общепринято
+но как быть если у меня N docker images который надо скомпилировать?
+all in one file неудобно ненаглядно
