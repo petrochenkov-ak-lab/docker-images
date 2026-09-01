@@ -1,5 +1,6 @@
 # 1. Используем ультра-легкий, но стабильный Debian Slim
 FROM debian:bookworm-slim
+LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/github-runner
 
 # 2. Версия раннера
 ARG RUNNER_VERSION="2.336.0"
