@@ -1,11 +1,12 @@
-name: Deploy Postgres
+name: Deploy python-alpine-psycopg2
 
 on:
   push:
     branches: [ main ]
     paths:
       - 'postgres/**'
-      - '.github/workflows/deploy-github-runner.yaml'
+      - '.github/workflows/deploy-python-alpine-psycopg2.yaml'
+    workflow_dispatch:
 
 permissions:
   contents: read
@@ -32,8 +33,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./postgres/Dockerfile
+          file: ./python-alpine-psycopg2/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/github-runner:latest
+          tags: ghcr.io/${{ github.repository_owner }}/deploy-python-alpine-psycopg2:3.14
           cache-from: type=gha
           cache-to: type=gha,mode=max
