@@ -1,5 +1,5 @@
 FROM python:3.14.3-alpine3.23
-LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/python-alpine-psycopg2
+LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/docker-images
 
 COPY ./python-alpine-psycopg2/logging.conf /etc/logging.conf
 COPY ./python-alpine-psycopg2/pip.conf /etc/pip.conf
