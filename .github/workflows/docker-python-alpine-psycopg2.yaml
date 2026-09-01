@@ -6,7 +6,7 @@ on:
     paths:
       - 'postgres/**'
       - '.github/workflows/docker-python-alpine-psycopg2.yaml'
-    workflow_dispatch:
+  workflow_dispatch:
 
 permissions:
   contents: read
