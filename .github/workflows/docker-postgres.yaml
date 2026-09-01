@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
       - 'postgres/**'
-      - '.github/workflows/deploy-postgres.yaml'
+      - '.github/workflows/docker-postgres.yaml'
     workflow_dispatch:
 
 permissions:
