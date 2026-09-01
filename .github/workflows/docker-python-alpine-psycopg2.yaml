@@ -35,6 +35,6 @@ jobs:
           context: .
           file: ./python-alpine-psycopg2/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/deploy-python-alpine-psycopg2:3.14
+          tags: ghcr.io/${{ github.repository_owner }}/python-alpine-psycopg2:3.14
           cache-from: type=gha
           cache-to: type=gha,mode=max
