@@ -8,33 +8,11 @@ on:
       - '.github/workflows/docker-python-alpine-psycopg2.yaml'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  packages: write
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./python-alpine-psycopg2/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository_owner }}/python-alpine-psycopg2:3.14
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+  docker_build:
+    uses: ./.github/workflows/docker-build.yml@main
+    with:
+      image_name: 'python-alpine-psycopg2'
+      image_tag: '3.14'
+      dockerfile: './python-alpine-psycopg2/Dockerfile'
