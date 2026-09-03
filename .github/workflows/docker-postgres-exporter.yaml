@@ -10,7 +10,7 @@ on:
 
 jobs:
   docker_build:
-    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml
+    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml@main
     with:
       image_name: 'postgres-exporter'
       image_tag: 'v0.18.0'
