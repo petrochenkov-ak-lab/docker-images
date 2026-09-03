@@ -10,7 +10,7 @@ on:
 
 jobs:
   docker_build:
-    uses: ./.github/workflows/docker-build.yml
+    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml
     with:
       image_name: 'python-alpine-psycopg2'
       image_tag: '3.14'

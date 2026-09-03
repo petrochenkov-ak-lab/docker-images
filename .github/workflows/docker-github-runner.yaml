@@ -10,7 +10,7 @@ on:
 
 jobs:
   docker_build:
-    uses: ./.github/workflows/docker-build.yml
+    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml
     with:
       image_name: 'github-runner'
       image_tag: 'latest'
