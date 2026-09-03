@@ -1,4 +1,4 @@
-name: Deploy python-alpine-psycopg2
+name: docker-python-alpine-psycopg2.yaml
 
 on:
   push:
