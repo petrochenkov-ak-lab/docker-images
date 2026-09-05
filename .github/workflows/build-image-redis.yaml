@@ -8,6 +8,9 @@ on:
 
 jobs:
   docker_build:
+    permissions:
+      contents: read
+      packages: write
     uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
       image_name: 'redis'
