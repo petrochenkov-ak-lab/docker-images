@@ -2,13 +2,13 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'postgres/**'
+      - 'python-alpine-psycopg2/**'
       - '.github/workflows/*-python-alpine-psycopg2.yaml'
   workflow_dispatch:
 
 jobs:
   docker_build:
-    uses: petrochenkov-ak-lab/.github/.github/workflows/base/docker/build/image.yml@main
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
       image_name: 'python-alpine-psycopg2'
       image_tag: '3.14'
