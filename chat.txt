@@ -1,0 +1,9 @@
+docker-images/ репозитори с docker images кодом
+docker-images/{name}/ директория конкретного image
+
+
+как назвать github actions?
+.github/workflows/xxx.yaml
+
+
+варианты таблицей шкала 1..100

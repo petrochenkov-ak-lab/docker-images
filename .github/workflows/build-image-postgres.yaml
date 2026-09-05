@@ -1,16 +1,14 @@
-name: docker-postgres.yaml
-
 on:
   push:
     branches: [ main ]
     paths:
       - 'postgres/**'
-      - '.github/workflows/docker-postgres.yaml'
+      - '.github/workflows/*-postgres.yaml'
   workflow_dispatch:
 
 jobs:
   docker_build:
-    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml@main
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base/docker/build/image.yml@main
     with:
       image_name: 'postgres'
       image_tag: '18'

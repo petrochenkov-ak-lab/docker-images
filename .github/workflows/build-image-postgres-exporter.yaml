@@ -1,16 +1,14 @@
-name: docker-postgres-exporter.yaml
-
 on:
   push:
     branches: [ main ]
     paths:
       - 'postgres-exporter/**'
-      - '.github/workflows/docker-postgres-exporter.yaml'
+      - '.github/workflows/*-postgres-exporter.yaml'
   workflow_dispatch:
 
 jobs:
   docker_build:
-    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml@main
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base/docker/build/image.yml@main
     with:
       image_name: 'postgres-exporter'
       image_tag: 'v0.18.0'

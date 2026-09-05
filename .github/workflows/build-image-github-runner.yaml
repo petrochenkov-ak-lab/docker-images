@@ -1,16 +1,14 @@
-name: docker-github-runner.yaml
-
 on:
   push:
     branches: [ main ]
     paths:
       - 'postgres/**'
-      - '.github/workflows/docker-github-runner.yaml'
+      - '.github/workflows/*-github-runner.yaml'
   workflow_dispatch:
 
 jobs:
   docker_build:
-    uses: petrochenkov-ak-lab/.github/.github/workflows/docker-build.yml@main
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base/docker/build/image.yml@main
     with:
       image_name: 'github-runner'
       image_tag: 'latest'

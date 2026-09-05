@@ -1,0 +1,15 @@
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'redis/**'
+      - '.github/workflows/*-redis.yaml'
+  workflow_dispatch:
+
+jobs:
+  docker_build:
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base/docker/build/image.yml@main
+    with:
+      image_name: 'redis'
+      image_tag: '7-alpine'
+      dockerfile: './redis/Dockerfile'
