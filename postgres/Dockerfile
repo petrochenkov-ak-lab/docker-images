@@ -10,5 +10,7 @@ ENV POSTGRES_HOST_AUTH_METHOD=trust
 ENV POSTGRES_DB=postgres
 ENV POSTGRES_USER=postgres
 
+ENV PGDATA=/var/lib/postgresql/18/docker
+
 USER postgres
 ENTRYPOINT ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
