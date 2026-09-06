@@ -6,4 +6,7 @@ RUN mkdir -p /etc/postgresql && chown -R postgres:postgres /etc/postgresql
 COPY --chown=postgres:postgres postgres/postgresql.base.conf /etc/postgresql/postgresql.base.conf
 COPY --chown=postgres:postgres postgres/pg_hba.conf /etc/postgresql/pg_hba.conf
 
+ENV POSTGRES_DB=postgres
+ENV POSTGRES_USER=postgres
+
 CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
