@@ -11,14 +11,13 @@ RUN openssl req -new -x509 -days 3650 -nodes -text -out /etc/postgresql/server.c
     && chmod 600 /etc/postgresql/server.key \
     && chown postgres:postgres /etc/postgresql/server.crt /etc/postgresql/server.key
 
+USER root
+
 ENV POSTGRES_HOST_AUTH_METHOD=trust
 ENV POSTGRES_DB=postgres
 ENV POSTGRES_USER=postgres
-
 ENV PGDATA=/var/lib/postgresql/18/docker
 # docker-compose.yaml volumes:
 # - /var/lib/postgresql/18/{project}:/var/lib/postgresql
 
-USER postgres
-# ENTRYPOINT ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
-CMD ["-c", "config_file=/etc/postgresql/postgresql.conf"]
+CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
