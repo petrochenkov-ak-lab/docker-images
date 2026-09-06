@@ -11,6 +11,9 @@ ENV POSTGRES_DB=postgres
 ENV POSTGRES_USER=postgres
 
 ENV PGDATA=/var/lib/postgresql/18/docker
+# docker-compose.yaml volumes:
+# - /var/lib/postgresql/18/{project}:/var/lib/postgresql
 
 USER postgres
-ENTRYPOINT ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+# ENTRYPOINT ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+CMD ["-c", "config_file=/etc/postgresql/postgresql.conf"]
