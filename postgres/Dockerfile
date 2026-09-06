@@ -10,4 +10,5 @@ ENV POSTGRES_HOST_AUTH_METHOD=trust
 ENV POSTGRES_DB=postgres
 ENV POSTGRES_USER=postgres
 
-CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
+USER postgres
+ENTRYPOINT ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
