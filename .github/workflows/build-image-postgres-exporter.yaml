@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'postgres-exporter/**'
       - '.github/workflows/*-postgres-exporter.yaml'
+      - 'postgres-exporter/**'
   workflow_dispatch:
 
 jobs:

@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'postgres/**'
       - '.github/workflows/*-github-runner.yaml'
+      - 'github-runner/**'
   workflow_dispatch:
 
 jobs:
