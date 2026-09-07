@@ -1,9 +1,9 @@
 FROM python:3.14.3-alpine3.23
 LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/docker-images
 
-COPY ./python-alpine-psycopg2/logging.conf /etc/logging.conf
-COPY ./python-alpine-psycopg2/pip.conf /etc/pip.conf
-COPY ./python-alpine-psycopg2/uv.toml /etc/uv.toml
+COPY ./python-alpine-psycopg2/etc/python/logging.conf /etc/python/logging.conf
+COPY ./python-alpine-psycopg2/etc/pip.conf /etc/pip.conf
+COPY ./python-alpine-psycopg2/etc/uv.toml /etc/uv.toml
 
 ENV PIP_NO_CACHE_DIR=1
 ENV PIP_ROOT_USER_ACTION=ignore
