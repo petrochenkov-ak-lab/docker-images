@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-build.yaml@main
     with:
       image_name: 'squid'
       image_tag: 'latest'
