@@ -1,0 +1,18 @@
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - .github/workflows/docker-squid-build.yaml
+      - 'squid/**'
+  workflow_dispatch:
+
+jobs:
+  docker_build:
+    permissions:
+      contents: read
+      packages: write
+    uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
+    with:
+      image_name: 'squid'
+      image_tag: 'latest'
+      dockerfile: './squid/Dockerfile'

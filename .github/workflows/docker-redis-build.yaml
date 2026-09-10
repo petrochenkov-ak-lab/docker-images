@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/*-python-alpine-psycopg2.yaml'
-      - 'python-alpine-psycopg2/**'
+      - .github/workflows/docker-redis-build.yaml
+      - 'redis/**'
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,6 @@ jobs:
       packages: write
     uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
-      image_name: 'python-alpine-psycopg2'
-      image_tag: '3.14'
-      dockerfile: './python-alpine-psycopg2/Dockerfile'
+      image_name: 'redis'
+      image_tag: '7-alpine'
+      dockerfile: './redis/Dockerfile'

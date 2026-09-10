@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/*-github-runner.yaml'
-      - 'github-runner/**'
+      - .github/workflows/docker-postgres-exporter-build.yaml
+      - 'postgres-exporter/**'
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,7 @@ jobs:
       packages: write
     uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
-      image_name: 'github-runner'
-      image_tag: 'latest'
-      dockerfile: './github-runner/Dockerfile'
+      image_name: 'postgres-exporter'
+      image_tag: 'v0.18.0'
+      dockerfile: './postgres-exporter/Dockerfile'
+

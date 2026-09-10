@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/*-redis.yaml'
-      - 'redis/**'
+      - .github/workflows/docker-postgres-build.yaml
+      - 'postgres/**'
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,7 @@ jobs:
       packages: write
     uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
-      image_name: 'redis'
-      image_tag: '7-alpine'
-      dockerfile: './redis/Dockerfile'
+      image_name: 'postgres'
+      image_tag: '18'
+      dockerfile: './postgres/Dockerfile'
+

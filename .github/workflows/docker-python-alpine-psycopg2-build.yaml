@@ -2,8 +2,8 @@ on:
   push:
     branches: [ main ]
     paths:
-      - '.github/workflows/*-postgres-exporter.yaml'
-      - 'postgres-exporter/**'
+      - .github/workflows/docker-python-alpine-psycopg2-build.yaml
+      - 'python-alpine-psycopg2/**'
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,6 @@ jobs:
       packages: write
     uses: petrochenkov-ak-lab/.github/.github/workflows/base-docker-image.yaml@main
     with:
-      image_name: 'postgres-exporter'
-      image_tag: 'v0.18.0'
-      dockerfile: './postgres-exporter/Dockerfile'
-
+      image_name: 'python-alpine-psycopg2'
+      image_tag: '3.14'
+      dockerfile: './python-alpine-psycopg2/Dockerfile'
