@@ -5,33 +5,57 @@ services:
     build:
       context: ../images/github-runner
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=github-runner
+      cache_to:
+        - type=gha,mode=max,scope=github-runner
 
   postgres:
     image: ghcr.io/petrochenkov-ak-lab/postgres:18
     build:
       context: ../images/postgres
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=postgres
+      cache_to:
+        - type=gha,mode=max,scope=postgres
 
   postgres-exporter:
     image: ghcr.io/petrochenkov-ak-lab/postgres-exporter:v0.18.0
     build:
       context: ../images/postgres-exporter
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=postgres-exporter
+      cache_to:
+        - type=gha,mode=max,scope=postgres-exporter
 
   python-alpine-psycopg2:
     image: ghcr.io/petrochenkov-ak-lab/python-alpine-psycopg2:3.14
     build:
       context: ../images/python-alpine-psycopg2
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=python-alpine-psycopg2
+      cache_to:
+        - type=gha,mode=max,scope=python-alpine-psycopg2
 
   redis:
     image: ghcr.io/petrochenkov-ak-lab/redis:7-alpine
     build:
       context: ../images/redis
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=redis
+      cache_to:
+        - type=gha,mode=max,scope=redis
 
   squid:
     image: ghcr.io/petrochenkov-ak-lab/squid:latest
     build:
       context: ../images/squid
       dockerfile: Dockerfile
+      cache_from:
+        - type=gha,scope=squid
+      cache_to:
+        - type=gha,mode=max,scope=squid
