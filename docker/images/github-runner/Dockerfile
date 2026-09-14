@@ -34,7 +34,7 @@ RUN curl -f -o actions-runner-linux-x64-2.336.0.tar.gz -L https://github.com/act
 
 # 8. Copy and set permissions for the initialization script (entrypoint.sh)
 USER root
-COPY ./github-runner/entrypoint.sh /home/runner/actions-runner/entrypoint.sh
+COPY ./docker/images/github-runner/entrypoint.sh /home/runner/actions-runner/entrypoint.sh
 RUN chmod +x /home/runner/actions-runner/entrypoint.sh \
     && chown -R runner:runner /home/runner/actions-runner
 

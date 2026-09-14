@@ -3,7 +3,7 @@ LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/doc
 
 USER root
 
-COPY postgres-exporter/entrypoint.sh /entrypoint.sh
+COPY docker/images/postgres-exporter/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
