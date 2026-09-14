@@ -3,8 +3,8 @@ LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/doc
 
 RUN mkdir -p /etc/postgresql && chown -R postgres:postgres /etc/postgresql
 
-COPY --chown=postgres:postgres docker/images/postgres/postgresql.base.conf /etc/postgresql/postgresql.base.conf
-COPY --chown=postgres:postgres docker/images/postgres/pg_hba.conf /etc/postgresql/pg_hba.conf
+COPY --chown=postgres:postgres ./postgresql.base.conf /etc/postgresql/postgresql.base.conf
+COPY --chown=postgres:postgres ./pg_hba.conf /etc/postgresql/pg_hba.conf
 
 RUN openssl req -new -x509 -days 3650 -nodes -text -out /etc/postgresql/server.crt \
     -keyout /etc/postgresql/server.key -subj "/CN=localhost" \
