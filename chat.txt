@@ -1,0 +1,33 @@
+если в репозитории N docker images
+{name}/Dockerfile то как корректнее
+1) 1 image = 1 action yaml, N actions
+2) в 1 github action но как тогда? custom action? переиспользовать какой-то универсальный action не получится?
+---
+нужно docker build из docker compose тк удобно но в некоторых проектах потом нужен еще pull на сервере, а в других только сборка
+как сделать?
+1) if else в 1
+
+---
+можно ли в github actions устанавливать порядок выполнения yaml?
+просто хочу сделать независимые actions
+---
+docker-images/ репозиторий с docker images кодовой базой
+docker-images/{name}/
+
+думаю сделать совместимость с другими репозиториями где тоже docker образы и docker compose
+
+в таком случае лучше делать единую структуру ?
+docker/compose/
+docker/images/
+тогда будет вот так
+docker-images/docker/images/{name}/ масло масляное зато совместимо?
+---
+docker/images/github-runner/Dockerfile
+docker/images/postgres/Dockerfile
+docker/images/postgres-exporter/Dockerfile
+docker/images/python-alpine-psycopg2/Dockerfile
+docker/images/redis/Dockerfile
+docker/images/squid/Dockerfile
+
+напиши docker compose чтобы собирать это images
+    image: ghcr.io/petrochenkov-ak-lab/

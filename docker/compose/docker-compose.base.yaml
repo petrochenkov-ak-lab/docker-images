@@ -1,0 +1,37 @@
+services:
+
+  github-runner:
+    image: ghcr.io/petrochenkov-ak-lab/github-runner:latest
+    build:
+      context: ../images/github-runner
+      dockerfile: Dockerfile
+
+  postgres:
+    image: ghcr.io/petrochenkov-ak-lab/postgres:18
+    build:
+      context: ../images/postgres
+      dockerfile: Dockerfile
+
+  postgres-exporter:
+    image: ghcr.io/petrochenkov-ak-lab/postgres-exporter:v0.18.0
+    build:
+      context: ../images/postgres-exporter
+      dockerfile: Dockerfile
+
+  python-alpine-psycopg2:
+    image: ghcr.io/petrochenkov-ak-lab/python-alpine-psycopg2:3.14
+    build:
+      context: ../images/python-alpine-psycopg2
+      dockerfile: Dockerfile
+
+  redis:
+    image: ghcr.io/petrochenkov-ak-lab/redis:7-alpine
+    build:
+      context: ../images/redis
+      dockerfile: Dockerfile
+
+  squid:
+    image: ghcr.io/petrochenkov-ak-lab/squid:latest
+    build:
+      context: ../images/squid
+      dockerfile: Dockerfile
