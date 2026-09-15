@@ -14,7 +14,6 @@ services:
     image: ghcr.io/petrochenkov-ak-lab/postgres:18
     build:
       context: ../images/postgres
-      dockerfile: Dockerfile
       cache_from:
         - type=gha,scope=postgres
       cache_to:
@@ -24,7 +23,6 @@ services:
     image: ghcr.io/petrochenkov-ak-lab/postgres-exporter:v0.18.0
     build:
       context: ../images/postgres-exporter
-      dockerfile: Dockerfile
       cache_from:
         - type=gha,scope=postgres-exporter
       cache_to:
@@ -34,7 +32,6 @@ services:
     image: ghcr.io/petrochenkov-ak-lab/python-alpine-psycopg2:3.14
     build:
       context: ../images/python-alpine-psycopg2
-      dockerfile: Dockerfile
       cache_from:
         - type=gha,scope=python-alpine-psycopg2
       cache_to:
