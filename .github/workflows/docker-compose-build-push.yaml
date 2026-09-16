@@ -3,7 +3,7 @@ on:
     branches: [ main ]
     paths:
       - .github/workflows/docker-compose-build-push.yaml
-      - 'docker/images/**'
+      - 'docker/**'
   workflow_dispatch:
 
 jobs:

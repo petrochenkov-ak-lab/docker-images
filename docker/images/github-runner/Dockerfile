@@ -1,24 +1,23 @@
-# 1. Используем ультра-легкий, но стабильный Debian Slim
 FROM debian:bookworm-slim
 LABEL org.opencontainers.image.source=https://github.com/petrochenkov-ak-lab/docker-images
 
-# 2. Версия раннера
 ARG RUNNER_VERSION="2.336.0"
+# Хэш-сумма для версии 2.336.0 (обновляйте вместе с RUNNER_VERSION)
+ARG RUNNER_SHA="04cf0be1aff4c3ec3554466c39124ca250e3effd8873bb7e8d68535aa9505d5d"
 
-# 3. Отключаем интерактивные диалоги
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 4. Установка ТОЛЬКО необходимых зависимостей в один слой
-# Использование --no-install-recommends экономит сотни мегабайт
+# Установка зависимостей + библиотеки, необходимые для работы .NET (раннера)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     sudo \
     git \
     jq \
     ca-certificates \
+    libicu-dev \
+    libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# 5. Создание безопасного пользователя
 RUN useradd -m runner \
     && usermod -aG sudo runner \
     && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -26,20 +25,17 @@ RUN useradd -m runner \
 USER runner
 WORKDIR /home/runner/actions-runner
 
-# https://github.com/organizations/petrochenkov-ak-lab/settings/actions/runners/new?arch=x64&os=linux
-RUN curl -f -o actions-runner-linux-x64-2.336.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.336.0/actions-runner-linux-x64-2.336.0.tar.gz \
-    && echo "04cf0be1aff4c3ec3554466c39124ca250e3effd8873bb7e8d68535aa9505d5d  actions-runner-linux-x64-2.336.0.tar.gz" | sha256sum -c \
-    && tar xzf ./actions-runner-linux-x64-2.336.0.tar.gz \
-    && rm ./actions-runner-linux-x64-2.336.0.tar.gz
+# Динамическое скачивание с использованием переданных аргументов
+RUN curl -f -o actions-runner-linux-x64.tar.gz -L "https://github.com{RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz" \
+    && echo "${RUNNER_SHA}  actions-runner-linux-x64.tar.gz" | sha256sum -c \
+    && tar xzf ./actions-runner-linux-x64.tar.gz \
+    && rm ./actions-runner-linux-x64.tar.gz
 
-# 8. Copy and set permissions for the initialization script (entrypoint.sh)
+# Настройка прав для скрипта инициализации
 USER root
 COPY ./entrypoint.sh /home/runner/actions-runner/entrypoint.sh
 RUN chmod +x /home/runner/actions-runner/entrypoint.sh \
     && chown -R runner:runner /home/runner/actions-runner
 
 USER runner
-WORKDIR /home/runner/actions-runner
-
-# 9. Trigger the script that registers the runner with your GitHub organization on startup
 ENTRYPOINT ["./entrypoint.sh"]
