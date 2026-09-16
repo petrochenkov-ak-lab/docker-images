@@ -4,6 +4,10 @@ FROM ubuntu:24.04
 
 ENV HOME=/home/runner
 
+# --- ЗАШИВАЕМ ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ ПО УМОЛЧАНИЮ ---
+ENV RUNNER_LABELS="linux,x64,my-custom-label"
+ENV RUNNER_EPHEMERAL="false"
+
 # Base dependencies
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -15,8 +19,6 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 # The runner refuses to run as root.
-# ubuntu:24.04 ships with a default 'ubuntu' user at UID 1000 - remove it
-# (whoever owns UID 1000) and create the runner user with the same UID.
 RUN if id -u 1000 >/dev/null 2>&1; then userdel -r "$(id -nu 1000)"; fi \
  && useradd -m -u 1000 -s /bin/bash runner \
  && echo "runner ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/runner \
@@ -26,7 +28,7 @@ WORKDIR /actions-runner
 
 # Runner 2.337.0, linux x64, pinned checksum
 RUN curl -fsSL -o /tmp/runner.tar.gz \
-      "https://github.com/actions/runner/releases/download/v2.337.0/actions-runner-linux-x64-2.337.0.tar.gz" \
+      "https://github.com" \
  && echo "70920811a4f8ad4328818682bca5c6469c1c942fab52448868071d0063816613  /tmp/runner.tar.gz" | shasum -a 256 -c \
  && tar xzf /tmp/runner.tar.gz -C /actions-runner \
  && rm /tmp/runner.tar.gz \
