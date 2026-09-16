@@ -14,8 +14,11 @@ RUN apt-get update \
       sudo \
  && rm -rf /var/lib/apt/lists/*
 
-# The runner refuses to run as root
-RUN useradd -m -u 1000 -s /bin/bash runner \
+# The runner refuses to run as root.
+# ubuntu:24.04 ships with a default 'ubuntu' user at UID 1000 - remove it
+# (whoever owns UID 1000) and create the runner user with the same UID.
+RUN if id -u 1000 >/dev/null 2>&1; then userdel -r "$(id -nu 1000)"; fi \
+ && useradd -m -u 1000 -s /bin/bash runner \
  && echo "runner ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/runner \
  && chmod 0440 /etc/sudoers.d/runner
 
